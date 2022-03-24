@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Currency</title>
+</head>
+<body>
+<h1>Select a currency to see its exchange rape</h1>
+
+<label for="currency">Currency</label>
+<select id="currency">
+    <option value=""></option>
+    <option value="USD">USD</option>
+    <option value="EUR">EUR</option>
+    <option value="CNY">CNY</option>
+</select>
+
+<hr>
+<span>Previous price</span>
+<span id="previous"></span>
+<hr>
+<span>Current price</span>
+<span id="current"></span>
+
+
+<script>
+    let cur = document.getElementById("currency")
+    cur.addEventListener('change', async (e) => {
+        if (e.target.value) {
+            console.log(e.target.value)
+            const res = await fetch("http://localhost:3000/currency/" + e.target.value)
+            const js = await res.json()
+            console.log(js)
+
+            document.getElementById("current").innerText = js.currency.Value
+            document.getElementById("previous").innerText = js.currency.Previous
+        }
+
+        else {
+            document.getElementById("current").innerText = ""
+            document.getElementById("previous").innerText = ""
+        }
+    })
+
+
+</script>
+</body>
+</html>
